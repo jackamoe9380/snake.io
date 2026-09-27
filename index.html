@@ -11,24 +11,68 @@
             height: 100%;
             overflow: hidden;
             background-color: #000;
+            font-family: Arial, sans-serif;
         }
         iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
+        /* Container to center the button over the black background */
+        #menu-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            z-index: 10;
+        }
+        #playButton {
+            padding: 15px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        #playButton:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
 
+    <!-- This overlay covers the screen until clicked -->
+    <div id="menu-overlay">
+        <button id="playButton">Play Game</button>
+    </div>
+
+    <!-- The iframe starts completely blank -->
     <iframe id="frame" src="" allowfullscreen></iframe>
 
     <script>
-        const Url = "aHR0cHM6Ly96YXBnYW1lcy5pby9zbmFrZS1pby5lbWJlZA==";
-        
-        const decUrl = atob(Url);
-        
-        document.getElementById('frame').src = decUrl;
+        document.getElementById('playButton').addEventListener('click', function() {
+            // Hide the overlay menu
+            document.getElementById('menu-overlay').style.display = 'none';
+
+            // The Base64 encoded URL
+            const Url = "aHR0cHM6Ly96YXBnYW1lcy5pby9zbmFrZS1pby5lbWJlZA==";
+            
+            // Decode the URL at runtime
+            const decUrl = atob(Url);
+            
+            // Inject the URL into the iframe to initiate loading
+            document.getElementById('frame').src = decUrl;
+        });
     </script>
 
 </body>
